@@ -1,23 +1,28 @@
-export class libraryService {
-    constructor() {}
+import { bookModel } from "../../schema/library.schema"
 
-    public create(): object {
-        return {}
+export class libraryService {
+    public create(dataInsert: any): object {
+        return bookModel.create(...dataInsert)
     }
     public getAll(): object {
-        return {}
+        return bookModel.find()
     }
-    public getByID(): object {
-        return {}
+    public getByID(id: number): object {
+        return bookModel.findById(id)
     }
-    public paginate(): object {
-        return {}
+    public paginate(pages: number): object {
+        return bookModel.find().limit(pages)
     }
-    public update(): object {
-        return {}
+
+    public getAuthor(author: object): object {
+        return bookModel.find({ author })
     }
-    public delete(): object {
-        return {}
+
+    public update(id: number, update: object): object {
+        return bookModel.findByIdAndUpdate(id, { ...update })
+    }
+    public delete(id: number): object {
+        return bookModel.findByIdAndDelete(id)
     }
 }
 

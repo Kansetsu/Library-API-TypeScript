@@ -12,28 +12,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
 const fastify_1 = __importDefault(require("fastify"));
 const library_service_1 = require("../services/library.service");
-const server = (0, fastify_1.default)({});
+const router = (0, fastify_1.default)({});
+exports.router = router;
 const service = new library_service_1.libraryService;
-server.post('/', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.create());
+router.post('/library', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    reply.send(yield service.create(request.body));
 }));
-server.get('/', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/library', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
     reply.send(yield service.getAll());
 }));
-server.get('/:id', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.getByID());
+router.get('/library/:id', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    reply.send(yield service.getByID(request.id));
 }));
-server.get('/paginate/:pages', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.paginate());
+router.get('/library/paginate/:pages', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    reply.send(yield service.paginate(request.id));
 }));
-server.get('/author/:category', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.paginate());
+router.get('/library/author/:category', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    reply.send(yield service.getAuthor(request));
 }));
-server.put('/', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.update());
+router.put('/', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    reply.send(yield service.update(request.id, request));
 }));
-server.delete('/', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.delete());
+router.delete('/', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    reply.send(yield service.delete(request.id));
 }));

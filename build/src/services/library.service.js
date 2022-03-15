@@ -1,25 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.libraryService = void 0;
+const library_schema_1 = require("../../schema/library.schema");
 class libraryService {
-    constructor() { }
-    create() {
-        return {};
+    create(dataInsert) {
+        return library_schema_1.bookModel.create(...dataInsert);
     }
     getAll() {
-        return {};
+        return library_schema_1.bookModel.find();
     }
-    getByID() {
-        return {};
+    getByID(id) {
+        return library_schema_1.bookModel.findById(id);
     }
-    paginate() {
-        return {};
+    paginate(pages) {
+        return library_schema_1.bookModel.find().limit(pages);
     }
-    update() {
-        return {};
+    getAuthor(author) {
+        return library_schema_1.bookModel.find({ author });
     }
-    delete() {
-        return {};
+    update(id, update) {
+        return library_schema_1.bookModel.findByIdAndUpdate(id, Object.assign({}, update));
+    }
+    delete(id) {
+        return library_schema_1.bookModel.findByIdAndDelete(id);
     }
 }
 exports.libraryService = libraryService;
