@@ -95,7 +95,7 @@
         "description": "Get a limited number of books",
         "parameters": [
           {
-            "name": "pages",
+            "name": "page",
             "description": "Number of pages",
             "required": true,
             "in": "query",

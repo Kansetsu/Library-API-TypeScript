@@ -40,8 +40,9 @@ async function libraryControllerPlugin(router, opts) {
         // #swagger.tags = ['Library']
         // #swagger.summary = 'Get a limited number of books'
         // #swagger.description = 'Get a limited number of books'
-        // #swagger.parameters['pages'] = { description: 'Number of pages', required: true }  
+        // #swagger.parameters['page'] = { description: 'Number of pages', required: true }  
         // #swagger.parameters['books'] = { description: 'Number of books for pages', required: true}  
+        console.log(request.query);
         reply.send(await service.paginate(request.query));
     });
     router.get('/author', async (request, reply) => {

@@ -13,9 +13,8 @@ export default class libraryService {
         return bookModel.findOne({ ...filter })
     }
 
-    public paginate(filter: { limit: number, skip: number }): object {
-        let newPage = filter.skip += filter.skip
-        return bookModel.find().skip(filter.skip).limit(filter.limit)
+    public paginate(filter: { page: number, books: number }): object {
+        return bookModel.find().limit(filter.books).skip((filter.page - 1) * filter.books)
     }
 
     public getAuthor(filter: { author: string }): object {
@@ -26,7 +25,7 @@ export default class libraryService {
         return bookModel.findOneAndUpdate({ name }, update, { new: true })
     }
 
-    public delete(filter: {name: string}): object {
+    public delete(filter: { name: string }): object {
         return bookModel.deleteOne(filter)
     }
 }

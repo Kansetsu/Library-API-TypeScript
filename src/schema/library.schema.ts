@@ -1,8 +1,9 @@
+import { ObjectId } from "mongodb"
 import mongoose from "mongoose"
 
 const bookSchema = new mongoose.Schema({
     name: { type: String },
-    author: { type: String },
+    authorID: { type: ObjectId },
     publishingCompany: { type: String },
     price: { type: Number },
     description: { type: String },
