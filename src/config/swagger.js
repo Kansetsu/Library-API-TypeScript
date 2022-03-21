@@ -1,40 +1,39 @@
-const fastify = require('fastify')()
+const swaggerAutogen = require('swagger-autogen')()
 
-fastify.register(require('fastify-swagger'), {
-    routePrefix: "",
-    swagger: {
-        info: {
-            title: "Library API v2",
-            description: "API for safe your book",
-            version: "0.1.0"
-        },
-        externalDocs: {
-            url: "https://swagger.io",
-            description: "Find more informtion here"
-        },
-        host: 'localhost:8000/ping',
-        schemes: ['http'],
-        consumes: ['application/json'],
-        produces: ['application/json'],
-        tags: [
-            { name: 'book', description: '' }],
-        definitions: {
-            Book: {
-                nome: "string",
-                autor: "string",
-                editora: "string",
-                preco: "number",
-                descricao: "string",
-                categoria: "string",
-                dataPublicacao: "string",
-                idioma: "string",
-                numeroDePaginas: "number"
-            }
-        },
+const outputFile = './doc/swagger_output.json'
+const controllerFile = ['./src/controller/library.controller.ts']
+
+// Responsible to gerate this informations on swagger_output.json
+
+const doc = {
+    info: {
+        version: "2.0.0",
+        title: "Library API",
+        description: "With this API you can create and safe your books and search your prefer author. This version use TypeScript as the main program language",
+        contact: {
+            email: "vmartins@daitan.com"
+        }
+    },
+    host: "localhost:8080",
+    basePath: "/library",
+    schemes: ["http"],
+    consumes: ['application/json'],
+    produces: ['application/json'],
+    definitions: {
+        Book: {
+            name: "Cinderella",
+            author: "Patrícia Amorim",
+            publishingCompany: "Vale das letras",
+            price: 20.93,
+            description: "A Editora Vale das Letras traz para você uma forma fácil e divertida de incentivar suas crianças a praticar a língua inglesa!",
+            category: "Infantil",
+            publicationDate: "2019-03-13",
+            language: "Português",
+            pages: 36
+        }
     }
-})
+}
 
-fastify.ready(err => {
-    if (err) throw err
-    fastify.swagger()
-})
+
+//Generate a new swagger_output.json when you start the project, starting main.ts
+swaggerAutogen(outputFile, controllerFile, doc)

@@ -8,8 +8,9 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "tsc -p tsconfig.json && node ./build/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc -p tsconfig.json && npm run swagger-autogen && node ./build/main.js",
+    "swagger-autogen": "node ./src/config/swagger.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,6 @@
   "dependencies": {
     "fastify": "^3.27.4",
     "fastify-mongodb": "^4.1.1",
-    "fastify-plugin": "^3.0.1",
     "fastify-swagger": "^5.0.0",
     "mongodb": "^4.4.1",
     "swagger-autogen": "^2.19.0"

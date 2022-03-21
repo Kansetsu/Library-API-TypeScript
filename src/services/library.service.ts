@@ -1,28 +1,32 @@
-import { bookModel } from "../../schema/library.schema"
+import { bookModel } from "../schema/library.schema"
 
-export class libraryService {
+export default class libraryService {
     public create(dataInsert: any): object {
-        return bookModel.create(...dataInsert)
+        return bookModel.create(dataInsert)
     }
+
     public getAll(): object {
         return bookModel.find()
     }
-    public getByID(id: number): object {
-        return bookModel.findById(id)
-    }
-    public paginate(pages: number): object {
-        return bookModel.find().limit(pages)
+
+    public getBook(filter: { name?: string, author?: string }): object {
+        return bookModel.findOne({ ...filter })
     }
 
-    public getAuthor(author: object): object {
-        return bookModel.find({ author })
+    public paginate(filter: { limit: number, skip: number }): object {
+        let newPage = filter.skip += filter.skip
+        return bookModel.find().skip(filter.skip).limit(filter.limit)
     }
 
-    public update(id: number, update: object): object {
-        return bookModel.findByIdAndUpdate(id, { ...update })
+    public getAuthor(filter: { author: string }): object {
+        return bookModel.find(filter)
     }
-    public delete(id: number): object {
-        return bookModel.findByIdAndDelete(id)
+
+    public update(name: string, update: object): object {
+        return bookModel.findOneAndUpdate({ name }, update, { new: true })
+    }
+
+    public delete(filter: {name: string}): object {
+        return bookModel.deleteOne(filter)
     }
 }
-

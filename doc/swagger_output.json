@@ -1,0 +1,240 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.0.0",
+    "title": "Library API",
+    "description": "With this API you can create and safe your books and search your prefer author. This version use TypeScript as the main program language",
+    "contact": {
+      "email": "vmartins@daitan.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/library",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "post": {
+        "tags": [
+          "Library"
+        ],
+        "summary": "Create a book",
+        "description": "This route will be responsible for create a book in your database",
+        "parameters": [
+          {
+            "name": "book",
+            "in": "body",
+            "description": "Book information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "summary": "Get all books",
+        "description": "Get all books",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/book": {
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "summary": "Search for a book",
+        "description": "Search for a book using name or (If you pass no parameter it returns the first element from your database)",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Book name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "author",
+            "description": "Author name",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/paginate": {
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "summary": "Get a limited number of books",
+        "description": "Get a limited number of books",
+        "parameters": [
+          {
+            "name": "pages",
+            "description": "Number of pages",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "books",
+            "description": "Number of books for pages",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/author": {
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "summary": "Find books by the selected author",
+        "description": "Finds books by the selected author",
+        "parameters": [
+          {
+            "name": "author",
+            "description": "Name of the author",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/update/{name}": {
+      "put": {
+        "tags": [
+          "Library"
+        ],
+        "summary": "Update a book",
+        "description": "Update data from a book using your ID",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Book name for Update"
+          },
+          {
+            "name": "book",
+            "in": "body",
+            "description": "Book information for update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/delete": {
+      "delete": {
+        "tags": [
+          "Library"
+        ],
+        "summary": "Delete a book",
+        "description": "Delete a book in database",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Book to delete",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Book": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Cinderella"
+        },
+        "author": {
+          "type": "string",
+          "example": "Patrícia Amorim"
+        },
+        "publishingCompany": {
+          "type": "string",
+          "example": "Vale das letras"
+        },
+        "price": {
+          "type": "number",
+          "example": 20.93
+        },
+        "description": {
+          "type": "string",
+          "example": "A Editora Vale das Letras traz para você uma forma fácil e divertida de incentivar suas crianças a praticar a língua inglesa!"
+        },
+        "category": {
+          "type": "string",
+          "example": "Infantil"
+        },
+        "publicationDate": {
+          "type": "string",
+          "example": "2019-03-13"
+        },
+        "language": {
+          "type": "string",
+          "example": "Português"
+        },
+        "pages": {
+          "type": "number",
+          "example": 36
+        }
+      }
+    }
+  }
+}

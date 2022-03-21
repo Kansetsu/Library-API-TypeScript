@@ -5,9 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mongoConnection = void 0;
 const fastify_mongodb_1 = __importDefault(require("fastify-mongodb"));
+const mongoose_1 = __importDefault(require("mongoose"));
 function mongoConnection(fastify) {
     fastify.register(fastify_mongodb_1.default, {
-        url: "mongodb://localhost:27017/",
+        url: "mongodb://localhost:27017/Library",
     });
+    mongoose_1.default.connect("mongodb://localhost:27017/Library");
 }
 exports.mongoConnection = mongoConnection;

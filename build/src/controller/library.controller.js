@@ -1,41 +1,75 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.router = void 0;
-const fastify_1 = __importDefault(require("fastify"));
-const library_service_1 = require("../services/library.service");
-const router = (0, fastify_1.default)({});
-exports.router = router;
-const service = new library_service_1.libraryService;
-router.post('/library', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.create(request.body));
-}));
-router.get('/library', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.getAll());
-}));
-router.get('/library/:id', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.getByID(request.id));
-}));
-router.get('/library/paginate/:pages', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.paginate(request.id));
-}));
-router.get('/library/author/:category', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.getAuthor(request));
-}));
-router.put('/', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.update(request.id, request));
-}));
-router.delete('/', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    reply.send(yield service.delete(request.id));
-}));
+exports.libraryControllerPlugin = void 0;
+const library_service_1 = __importDefault(require("../services/library.service"));
+//const router: FastifyInstance = Fastify({})
+const service = new library_service_1.default;
+// ---IMPORTANT---
+//The comments below are generating information in swagger_output.json for their creation
+async function libraryControllerPlugin(router, opts) {
+    router.post('/', async (request, reply) => {
+        // #swagger.tags = ['Library']
+        // #swagger.summary = 'Create a book'
+        // #swagger.description = 'This route will be responsible for create a book in your database'
+        /* #swagger.parameters['book'] = {
+            in: 'body',
+            description: 'Book information',
+            required: true,
+            schema: { $ref: "#/definitions/Book"}
+        }*/
+        reply.send(await service.create(request.body));
+    });
+    router.get('/', async (request, reply) => {
+        // #swagger.tags = ['Library']    
+        // #swagger.summary = 'Get all books'
+        // #swagger.description = 'Get all books'
+        reply.send(await service.getAll());
+    });
+    router.get('/book', async (request, reply) => {
+        // #swagger.tags = ['Library']
+        // #swagger.summary = 'Search for a book'
+        // #swagger.description = 'Search for a book using  name or  (If you pass no parameter it returns the first element from your database)'
+        // #swagger.parameters['name'] = { description: 'Book name' } 
+        // #swagger.parameters['author'] = { description: 'Author name'} 
+        reply.send(await service.getBook(request.query));
+    });
+    router.get('/paginate', async (request, reply) => {
+        // #swagger.tags = ['Library']
+        // #swagger.summary = 'Get a limited number of books'
+        // #swagger.description = 'Get a limited number of books'
+        // #swagger.parameters['pages'] = { description: 'Number of pages', required: true }  
+        // #swagger.parameters['books'] = { description: 'Number of books for pages', required: true}  
+        reply.send(await service.paginate(request.query));
+    });
+    router.get('/author', async (request, reply) => {
+        // #swagger.tags = ['Library']
+        // #swagger.summary = 'Find books by the selected author'
+        // #swagger.description = 'Finds books by the selected author'
+        // #swagger.parameters['author'] = { description: 'Name of the author' }  
+        reply.send(await service.getAuthor(request.query));
+    });
+    router.put('/update/:name', async (request, reply) => {
+        // #swagger.tags = ['Library']
+        // #swagger.summary = 'Update a book'
+        // #swagger.description = 'Update data from a book using your ID'
+        // #swagger.parameters['name'] = { description: 'Book name for Update' }
+        /* #swagger.parameters['book'] = {
+            in: 'body',
+            description: 'Book information for update',
+            required: true,
+            schema: { $ref: "#/definitions/Book"}
+        }*/
+        reply.send(await service.update(request.params.name, request.body));
+    });
+    router.delete('/delete', async (request, reply) => {
+        // #swagger.summary = 'Delete a book'
+        // #swagger.description = 'Delete a book in database'
+        // #swagger.parameters['name'] = { description: 'Book to delete', required: true }
+        // #swagger.tags = ['Library']
+        reply.send(await service.delete(request.query));
+    });
+}
+exports.libraryControllerPlugin = libraryControllerPlugin;
