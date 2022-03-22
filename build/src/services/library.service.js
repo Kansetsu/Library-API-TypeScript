@@ -17,6 +17,10 @@ class libraryService {
     getAuthor(filter) {
         return library_schema_1.bookModel.find(filter);
     }
+    getCategory(filter) {
+        console.log(filter);
+        return library_schema_1.bookModel.findOne({ ...filter });
+    }
     update(name, update) {
         return library_schema_1.bookModel.findOneAndUpdate({ name }, update, { new: true });
     }

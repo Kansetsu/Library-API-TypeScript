@@ -29,8 +29,8 @@ async function libraryControllerPlugin(router, opts) {
     });
     router.get('/library/book', async (request, reply) => {
         // #swagger.tags = ['Library']
-        // #swagger.summary = 'Search for a book'
-        // #swagger.description = 'Search for a book using  name or author name (If you pass no parameter it returns the first element from your database)'
+        // #swagger.summary = 'Get a book'
+        // #swagger.description = 'Get a book using name or author (If you pass no parameter it returns the first element from your database)'
         // #swagger.parameters['name'] = { description: 'Book name' } 
         // #swagger.parameters['author'] = { description: 'Author name'} 
         reply.send(await service.getBook(request.query));
@@ -39,8 +39,8 @@ async function libraryControllerPlugin(router, opts) {
         // #swagger.tags = ['Library']
         // #swagger.summary = 'Get a limited number of books'
         // #swagger.description = 'Get a limited number of books'
-        // #swagger.parameters['page'] = { description: 'Number of page', required: true }  
-        // #swagger.parameters['books'] = { description: 'Number of books for page', required: true}  
+        // #swagger.parameters['page'] = { description: 'Page number', required: true }  
+        // #swagger.parameters['books'] = { description: 'Number of books per page', required: true}  
         reply.send(await service.paginate(request.query));
     });
     router.get('/library/author', async (request, reply) => {
@@ -49,6 +49,15 @@ async function libraryControllerPlugin(router, opts) {
         // #swagger.description = 'Finds books by the selected author'
         // #swagger.parameters['author'] = { description: 'Name of the author' }  
         reply.send(await service.getAuthor(request.query));
+    });
+    router.get('/library/category', async (request, reply) => {
+        // #swagger.tags = ['Library']
+        // #swagger.summary = 'Get a book by category e author '
+        // #swagger.description = 'Get a book by category e author (If you pass no parameter it returns the first element from your database)'
+        // #swagger.parameters['category'] = { description: 'Book category'}  
+        // #swagger.parameters['author'] = { description: 'Author name'}
+        console.log(request.query);
+        reply.send(await service.getCategory(request.query));
     });
     router.put('/library/update/:name', async (request, reply) => {
         // #swagger.tags = ['Library']

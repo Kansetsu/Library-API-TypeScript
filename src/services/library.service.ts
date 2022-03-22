@@ -21,6 +21,10 @@ export default class libraryService {
         return bookModel.find(filter)
     }
 
+    public getCategory(filter: { category?: string, author?: string }): object {
+        return bookModel.findOne({ ...filter })
+    }
+
     public update(name: string, update: object): object {
         return bookModel.findOneAndUpdate({ name }, update, { new: true })
     }
