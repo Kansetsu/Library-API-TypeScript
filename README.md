@@ -1,5 +1,5 @@
 # Projeto-API-v2 👨‍💻
-O projeto consiste em montar uma api com CRUD seguindo as regras do Clean code e boas práticas de GIT.
+O projeto consiste em montar uma api com CRUD seguindo as regras do Clean code, TypeScript e boas práticas de GIT.
 
 ## A api deve receber dados de uma biblioteca📚:
 - Uma rota para cadastrar livros
