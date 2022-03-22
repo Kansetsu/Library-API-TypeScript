@@ -9,6 +9,7 @@ const db_config_1 = require("./src/config/db.config");
 const server = (0, fastify_1.default)({ logger: true });
 (0, db_config_1.mongoConnection)(server);
 server.register(controller_1.controllerPlugin);
+server.register(controller_1.controllerPluginAuthor);
 server.register(controller_1.controllerPluginDoc);
 server.listen(8080, (err, address) => {
     if (err) {

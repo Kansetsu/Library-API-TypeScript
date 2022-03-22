@@ -1,5 +1,5 @@
 import fastify from "fastify"
-import { controllerPlugin, controllerPluginDoc } from "./src/controller"
+import { controllerPlugin, controllerPluginDoc, controllerPluginAuthor } from "./src/controller"
 import { mongoConnection } from "./src/config/db.config"
 
 const server = fastify({ logger: true })
@@ -7,6 +7,7 @@ const server = fastify({ logger: true })
 mongoConnection(server)
 
 server.register(controllerPlugin)
+server.register(controllerPluginAuthor)
 server.register(controllerPluginDoc)
 
 server.listen(8080, (err, address) => {

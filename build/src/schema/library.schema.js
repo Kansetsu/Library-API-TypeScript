@@ -3,11 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bookModel = void 0;
+exports.authorModel = exports.bookModel = void 0;
+const mongodb_1 = require("mongodb");
 const mongoose_1 = __importDefault(require("mongoose"));
 const bookSchema = new mongoose_1.default.Schema({
     name: { type: String },
-    author: { type: String },
+    authorID: { type: mongodb_1.ObjectId },
     publishingCompany: { type: String },
     price: { type: Number },
     description: { type: String },
@@ -16,4 +17,10 @@ const bookSchema = new mongoose_1.default.Schema({
     language: { type: String },
     pages: { type: Number }
 });
+const authorSchema = new mongoose_1.default.Schema({
+    name: { type: String },
+    age: { type: Number },
+    birthDate: { type: String }
+});
 exports.bookModel = mongoose_1.default.model("books", bookSchema);
+exports.authorModel = mongoose_1.default.model("author", authorSchema);

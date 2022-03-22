@@ -1,7 +1,7 @@
 const swaggerAutogen = require('swagger-autogen')()
 
 const outputFile = './doc/swagger_output.json'
-const controllerFile = ['./src/controller/library.controller.ts']
+const controllerFile = ['./src/controller/library.controller.ts', "./src/controller/author.controller.ts"]
 
 // Responsible to gerate this informations on swagger_output.json
 
@@ -15,7 +15,7 @@ const doc = {
         }
     },
     host: "localhost:8080",
-    basePath: "/library",
+    basePath: "/",
     schemes: ["http"],
     consumes: ['application/json'],
     produces: ['application/json'],
@@ -30,6 +30,11 @@ const doc = {
             publicationDate: "2019-03-13",
             language: "Português",
             pages: 36
+        },
+        Author: {
+            name: "Patrícia Amorim",
+            age: "50",
+            birthDate: "1972-01-01"
         }
     }
 }

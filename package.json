@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Vinicius-AndradeM/Projeto-API-v2#readme",
   "dependencies": {
+    "dotenv": "^16.0.0",
     "fastify": "^3.27.4",
     "fastify-mongodb": "^4.1.1",
     "fastify-swagger": "^5.0.0",

@@ -12,8 +12,7 @@ class libraryService {
         return library_schema_1.bookModel.findOne({ ...filter });
     }
     paginate(filter) {
-        console.log(filter);
-        return library_schema_1.bookModel.find().skip((filter.page - 1) * filter.books).limit(filter.books);
+        return library_schema_1.bookModel.find().limit(filter.books).skip((filter.page - 1) * filter.books);
     }
     getAuthor(filter) {
         return library_schema_1.bookModel.find(filter);

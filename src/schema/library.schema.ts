@@ -13,4 +13,12 @@ const bookSchema = new mongoose.Schema({
     pages: { type: Number }
 })
 
+const authorSchema = new mongoose.Schema({
+    name: { type: String },
+    age: { type: Number },
+    birthDate: { type: String }
+
+})
+
 export const bookModel = mongoose.model("books", bookSchema)
+export const authorModel = mongoose.model("author", authorSchema)

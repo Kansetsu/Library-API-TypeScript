@@ -1,8 +1,15 @@
 import { libraryControllerPlugin } from "./library.controller"
+import { authorControllerPlugin } from "./author.controller"
 
 async function controllerPlugin(app: any, opts: any) {
     app.register(libraryControllerPlugin, {
-        prefix: "/library"
+        prefix: "/"
+    })
+}
+
+async function controllerPluginAuthor(app :any, opts: any) {
+    app.register(authorControllerPlugin, {
+        prefix: "/"
     })
 }
 
@@ -18,4 +25,4 @@ async function controllerPluginDoc(app: any, opts: any) {
 
 }
 
-export { controllerPlugin, controllerPluginDoc }
+export { controllerPlugin, controllerPluginDoc, controllerPluginAuthor }

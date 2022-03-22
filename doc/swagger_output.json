@@ -9,7 +9,7 @@
     }
   },
   "host": "localhost:8080",
-  "basePath": "/library",
+  "basePath": "/",
   "schemes": [
     "http"
   ],
@@ -20,7 +20,7 @@
     "application/json"
   ],
   "paths": {
-    "/": {
+    "/library/create": {
       "post": {
         "tags": [
           "Library"
@@ -43,7 +43,9 @@
             "description": "OK"
           }
         }
-      },
+      }
+    },
+    "/library/all": {
       "get": {
         "tags": [
           "Library"
@@ -58,13 +60,13 @@
         }
       }
     },
-    "/book": {
+    "/library/book": {
       "get": {
         "tags": [
           "Library"
         ],
         "summary": "Search for a book",
-        "description": "Search for a book using name or (If you pass no parameter it returns the first element from your database)",
+        "description": "Search for a book using name or author name (If you pass no parameter it returns the first element from your database)",
         "parameters": [
           {
             "name": "name",
@@ -86,7 +88,7 @@
         }
       }
     },
-    "/paginate": {
+    "/library/paginate": {
       "get": {
         "tags": [
           "Library"
@@ -96,14 +98,14 @@
         "parameters": [
           {
             "name": "page",
-            "description": "Number of pages",
+            "description": "Number of page",
             "required": true,
             "in": "query",
             "type": "string"
           },
           {
             "name": "books",
-            "description": "Number of books for pages",
+            "description": "Number of books for page",
             "required": true,
             "in": "query",
             "type": "string"
@@ -116,7 +118,7 @@
         }
       }
     },
-    "/author": {
+    "/library/author": {
       "get": {
         "tags": [
           "Library"
@@ -138,7 +140,7 @@
         }
       }
     },
-    "/update/{name}": {
+    "/library/update/{name}": {
       "put": {
         "tags": [
           "Library"
@@ -170,7 +172,7 @@
         }
       }
     },
-    "/delete": {
+    "/library/delete": {
       "delete": {
         "tags": [
           "Library"
@@ -182,6 +184,68 @@
             "name": "name",
             "description": "Book to delete",
             "required": true,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/author/create": {
+      "post": {
+        "tags": [
+          "Author"
+        ],
+        "summary": "Create a author",
+        "description": "This route will be responsible for create a author in your database",
+        "parameters": [
+          {
+            "name": "author",
+            "in": "body",
+            "description": "Author information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Author"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/author/all": {
+      "get": {
+        "tags": [
+          "Author"
+        ],
+        "summary": "Get all authors",
+        "description": "Get all authors",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/author/get": {
+      "get": {
+        "tags": [
+          "Author"
+        ],
+        "summary": "Search for a author",
+        "description": "Search for a author using name (If you pass no parameter it returns the first element from your database)",
+        "parameters": [
+          {
+            "name": "author",
+            "description": "Author name",
             "in": "query",
             "type": "string"
           }
@@ -233,6 +297,23 @@
         "pages": {
           "type": "number",
           "example": 36
+        }
+      }
+    },
+    "Author": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Patrícia Amorim"
+        },
+        "age": {
+          "type": "string",
+          "example": "50"
+        },
+        "birthDate": {
+          "type": "string",
+          "example": "1972-01-01"
         }
       }
     }

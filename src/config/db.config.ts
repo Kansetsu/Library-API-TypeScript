@@ -9,4 +9,4 @@ function mongoConnection(fastify: FastifyInstance) {
     mongoose.connect("mongodb://localhost:27017/Library")
 }
 
-export {mongoConnection}
+export { mongoConnection }
