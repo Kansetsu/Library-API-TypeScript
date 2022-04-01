@@ -22,7 +22,7 @@ const doc = {
     definitions: {
         Book: {
             name: "Cinderella",
-            author: "Patrícia Amorim",
+            authorID: "Patrícia Amorim",
             publishingCompany: "Vale das letras",
             price: 20.93,
             description: "A Editora Vale das Letras traz para você uma forma fácil e divertida de incentivar suas crianças a praticar a língua inglesa!",

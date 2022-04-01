@@ -20,6 +20,13 @@ async function libraryControllerPlugin(router: any, opts: any) {
         reply.send(await service.create(request.body))
     })
 
+    router.get('/library/version', async (request: any, reply: any) => {
+        // #swagger.tags = ['Library']    
+        // #swagger.summary = 'Get project version'
+        // #swagger.description = 'Get project version'
+        reply.send(service.getVersion())
+    })
+
     router.get('/library/all', async (request: any, reply: any) => {
         // #swagger.tags = ['Library']    
         // #swagger.summary = 'Get all books'
@@ -54,14 +61,14 @@ async function libraryControllerPlugin(router: any, opts: any) {
         reply.send(await service.getAuthor(request.query))
     })
 
-    router.get('/library/category',async (request : any, reply: any) => {
+    router.get('/library/category', async (request: any, reply: any) => {
         // #swagger.tags = ['Library']
         // #swagger.summary = 'Get a book by category e author '
         // #swagger.description = 'Get a book by category e author (If you pass no parameter it returns the first element from your database)'
         // #swagger.parameters['category'] = { description: 'Book category'}  
         // #swagger.parameters['author'] = { description: 'Author name'}
         console.log(request.query);
-          
+
         reply.send(await service.getCategory(request.query))
     })
 

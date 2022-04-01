@@ -21,6 +21,12 @@ async function libraryControllerPlugin(router, opts) {
         }*/
         reply.send(await service.create(request.body));
     });
+    router.get('/library/version', async (request, reply) => {
+        // #swagger.tags = ['Library']    
+        // #swagger.summary = 'Get project version'
+        // #swagger.description = 'Get project version'
+        reply.send(service.getVersion());
+    });
     router.get('/library/all', async (request, reply) => {
         // #swagger.tags = ['Library']    
         // #swagger.summary = 'Get all books'

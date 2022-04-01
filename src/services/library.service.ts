@@ -1,16 +1,35 @@
 import { bookModel } from "../schema/library.schema"
+import { version } from '../../package.json';
 
 export default class libraryService {
     public create(dataInsert: any): object {
         return bookModel.create(dataInsert)
     }
 
+    public getVersion(): any {
+        return { version }
+    }
+
     public getAll(): object {
-        return bookModel.find()
+        return bookModel.aggregate([
+            {
+                $lookup: {
+                    from: "authors",
+                    localField: "authorID",
+                    foreignField: "_id",
+                    as: "author"
+                }
+            },
+
+            {
+                $unwind: "$author"
+            }
+        ])
     }
 
     public getBook(filter: { name?: string, author?: string }): object {
         return bookModel.findOne({ ...filter })
+        
     }
 
     public paginate(filter: { page: number, books: number }): object {

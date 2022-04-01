@@ -1,8 +1,11 @@
 import fastify from "fastify"
 import { controllerPlugin, controllerPluginDoc, controllerPluginAuthor } from "./src/controller"
 import { mongoConnection } from "./src/config/db.config"
+import { config } from "dotenv"
 
+config()
 const server = fastify({ logger: true })
+console.log(process.env);
 
 mongoConnection(server)
 

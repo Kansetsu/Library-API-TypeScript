@@ -1,4 +1,4 @@
-import { authorModel } from "../schema/library.schema"
+import { authorModel } from "../schema/author.schema"
 
 export default class authorService {
     public create(dataInsert: any): object {

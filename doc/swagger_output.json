@@ -45,6 +45,21 @@
         }
       }
     },
+    "/library/version": {
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "summary": "Get project version",
+        "description": "Get project version",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/library/all": {
       "get": {
         "tags": [
@@ -294,7 +309,7 @@
           "type": "string",
           "example": "Cinderella"
         },
-        "author": {
+        "authorID": {
           "type": "string",
           "example": "Patrícia Amorim"
         },

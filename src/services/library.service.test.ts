@@ -1,67 +1,125 @@
-import libraryService from "./library.service"
+// import libraryService from "./library.service"
 
-let service = new libraryService()
-const livro = {
-    name: "testes",
-    author: "testado",
-    publishingCompany: "testadora",
-    price: 10,
-    description: "testado com sucesso",
-    category: "teste",
-    publicationDate: "2022-02-23",
-    language: "Portugues",
-    pages: 10
-}
+// let service = new libraryService()
 
-jest.mock("../schema/library.schema", () => {
-    const dbData: any[] = []
-    return {
-        create: (dataInsert: any) => {
-            dbData.push(dataInsert)
-            return dataInsert
-        },
-        find: (options?: any) => {
-            if (options && options.limit) {
-                return dbData.slice(0, options.limit)
-            }
-            return dbData
-        },
-        findOneAndDelete: (name: any) => {
-            if (dbData.pop()) {
-                return 0
+// const book = {
+//     name: "teste",
+//     authorID: "123",
+//     publishingCompany: "teste",
+//     price: 10,
+//     description: "teste",
+//     category: "teste",
+//     publicationDate: "2022-02-23",
+//     language: "teste",
+//     pages: 10
+// }
 
-            } else return 1
-        },
-        findAndUpdate: (updateObj: any, options: any) => {
-            const obj = dbData[options.where.id - 1]
-            dbData[options.where.id - 1] = { ...obj, ...updateObj }
-        }
+// const author = {
+//     name: "author test",
+//     age: 1,
+//     birthDate: "2022-03-24",
+//     _id: "123"
+// }
 
-    }
-})
+// let deleteResultTrue: object = {
+//     acknowledged: true,
+//     deletedCount: 1
+// }
+// let deleteResultFalse: object = {
+//     acknowledged: true,
+//     deletedCount: 0
+// }
+
+// jest.mock("../schema/library.schema", () => {
+//     const library: { authors: any[], books: any[] } = {
+//         authors: [],
+//         books: []
+//     }
+
+//     return {
+//         bookModel: {
+//             create: (dataInsert: object) => {
+//                 library.books.push(dataInsert)
+//                 return dataInsert
+//             },
+//             findOne: (filter: { value1?: string, value2?: string }) => {
+//                 for (let i = 0; i < library.books.length; i++) {
+//                     if (library.books[i] == filter.value1 || library.books[i] == filter.value2) {
+//                         console.log(library.books[i]);
+                        
+//                         return library.books[i]
+//                     }
+//                 }
+//             },
+//             find: (filter: { value1?: number | string, value2?: number | string }) => {
+//                 if (filter.value1 || filter.value2) {
+//                     for (let i = 0; i < library.books.length; i++) {
+//                         if (library.books[i] == filter.value1 || library.books[i] == filter.value2) {
+//                             return library.books[i]
+//                         }
+//                     }
+//                 } else {
+//                     for (let i = 0; i < library.books.length; i++) {
+//                         return library.books[i]
+//                     }
+//                 }
+//             },
+//             findOneAndUpdate: (name: string, update: object) => {
+//                 for (let i = 0; i < library.books.length; i++) {
+//                     if (name == library.books[i]) {
+//                         library.books[i] = { ...library.books[i], ...update }
+//                     }
+//                 }
+//                 return update
+//             },
+//             deleteOne: (filter: { name: string }) => {
+//                 for (let i = 0; i < library.books.length; i++) {
+//                     if (filter.name == library.books[i]) {
+//                         if (library.books[i].pop()) {
+//                             return deleteResultTrue
+//                         } else return deleteResultFalse
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// })
 
 
+// test('create a book', async () => {
+//     expect(await service.create(book)).toEqual(book)
+// })
 
-test('create a book', async () => {
-    expect(await service.create(livro)).toEqual(livro)
-})
+// test('get a book', async () => {
+//     expect(await service.getBook(book)).toEqual(book)
+// })
 
-test('get all books', async() => {
-    expect(await service.getAll()).toEqual([livro])
-})
+const {MongoClient} = require('mongodb');
 
-test('get a specific number of books', async () => {
-    expect(await service.paginate(1)).toEqual([livro])
-})
+describe('insert', () => {
+  let connection: { db: () => any; close: () => any; };
+  let db: any;
 
-test('get a book for ID', async () => {
-    expect(await service.getBook("name")).toEqual(livro)
-})
+  beforeAll(async () => {
+    connection = await MongoClient.connect(global.__MONGO_URI__, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    db = await connection.db();
+  });
 
-test('delete a book for ID', async () => {
-    expect(await service.delete("name")).toEqual({ ...livro, "deleted": 0 })
-})
+  afterAll(async () => {
+    await connection.close();
+  });
 
-test('update a book', async () => {
-    expect(await service.update("name", { nome: "teste" })).toEqual({ nome: "teste" })
-})
+  it('should insert a doc into collection', async () => {
+      const users = db.collection('users');
+    
+      const mockUser = {_id: 'some-user-id', name: 'John'};
+      await users.insertOne(mockUser);
+    
+      const insertedUser = await users.findOne({_id: 'some-user-id'});
+      expect(insertedUser).toEqual(mockUser);
+    });
+    
+});

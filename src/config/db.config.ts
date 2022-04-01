@@ -4,9 +4,11 @@ import mongoose from "mongoose";
 
 function mongoConnection(fastify: FastifyInstance) {
     fastify.register(fastifyMongodb, {
-        url: "mongodb://localhost:27017/Library",
+        url: process.env.URL,
     })
-    mongoose.connect("mongodb://localhost:27017/Library")
+    if (process.env.URL) {
+        mongoose.connect(process.env.URL)
+    }
 }
 
 export { mongoConnection }

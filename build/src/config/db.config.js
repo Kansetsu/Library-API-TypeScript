@@ -8,8 +8,10 @@ const fastify_mongodb_1 = __importDefault(require("fastify-mongodb"));
 const mongoose_1 = __importDefault(require("mongoose"));
 function mongoConnection(fastify) {
     fastify.register(fastify_mongodb_1.default, {
-        url: "mongodb://localhost:27017/Library",
+        url: process.env.URL,
     });
-    mongoose_1.default.connect("mongodb://localhost:27017/Library");
+    if (process.env.URL) {
+        mongoose_1.default.connect(process.env.URL);
+    }
 }
 exports.mongoConnection = mongoConnection;
