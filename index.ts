@@ -1,14 +1,11 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const fastify_1 = __importDefault(require("fastify"));
-const controller_1 = require("./src/controller");
-const db_config_1 = require("./src/config/db.config");
-const dotenv_1 = require("dotenv");
-(0, dotenv_1.config)();
-const server = (0, fastify_1.default)({ logger: true, exposeHeadRoutes: true });
+import fastify from "fastify";
+import { controllerPlugin, controllerPluginDoc, controllerPluginAuthor } from "./src/controller";
+import { mongoConnection } from "./src/config/db.config";
+import { config } from "dotenv";
+
+config();
+const server = fastify({ logger: true, exposeHeadRoutes: true });
+
 // Wildcard OPTIONS handler for CORS preflight requests
 server.route({
     method: "OPTIONS",
@@ -27,6 +24,7 @@ server.route({
             .send();
     },
 });
+
 // CORS reply - 'Access-Control-Allow-Origin', '*' for now..
 // See https://github.com/fastify/fastify-cors/issues/20
 server.addHook("onRequest", function (request, reply, next) {
@@ -34,10 +32,12 @@ server.addHook("onRequest", function (request, reply, next) {
     reply.header("Access-Control-Allow-Credentials", true);
     next();
 });
-(0, db_config_1.mongoConnection)(server);
-server.register(controller_1.controllerPlugin);
-server.register(controller_1.controllerPluginAuthor);
-server.register(controller_1.controllerPluginDoc);
+
+mongoConnection(server);
+server.register(controllerPlugin);
+server.register(controllerPluginAuthor);
+server.register(controllerPluginDoc);
+
 server.listen(8080, (err, address) => {
     if (err) {
         console.log(err);

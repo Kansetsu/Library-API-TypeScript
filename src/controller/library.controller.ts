@@ -6,6 +6,7 @@ const service = new libraryService
 //The comments below are generating information in swagger_output.json for their creation
 
 async function libraryControllerPlugin(router: any, opts: any) {
+    
 
     router.post('/library/create', async (request: any, reply: any) => {
         // #swagger.tags = ['Library']

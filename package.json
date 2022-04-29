@@ -25,8 +25,11 @@
   "homepage": "https://github.com/Vinicius-AndradeM/Projeto-API-v2#readme",
   "dependencies": {
     "@shelf/jest-mongodb": "^2.2.1",
+    "@types/cors": "^2.8.12",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "fastify": "^3.27.4",
+    "fastify-cors": "^6.0.3",
     "fastify-mongodb": "^4.1.1",
     "fastify-swagger": "^5.0.0",
     "mongodb": "^4.4.1",
