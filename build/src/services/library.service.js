@@ -16,25 +16,34 @@ class libraryService {
                     from: "authors",
                     localField: "authorID",
                     foreignField: "_id",
-                    as: "author"
-                }
+                    as: "author",
+                },
             },
             {
-                $unwind: "$author"
-            }
+                $unwind: "$author",
+            },
         ]);
     }
-    getBook(filter) {
+    getBookByName(filter) {
         return library_schema_1.bookModel.findOne({ ...filter });
     }
     paginate(filter) {
-        return library_schema_1.bookModel.find().limit(filter.books).skip((filter.page - 1) * filter.books);
+        return library_schema_1.bookModel
+            .find()
+            .limit(filter.books)
+            .skip((filter.page - 1) * filter.books);
     }
-    getAuthor(filter) {
+    getBookByAuthor(filter) {
         return library_schema_1.bookModel.find(filter);
     }
-    getCategory(filter) {
+    getBookByCategory(filter) {
         return library_schema_1.bookModel.findOne({ ...filter });
+    }
+    getBookByCategoryAndPaginate(categoryFilter, filter) {
+        return library_schema_1.bookModel
+            .find(categoryFilter)
+            .limit(filter.books)
+            .skip((filter.page - 1) * filter.books);
     }
     update(name, update) {
         return library_schema_1.bookModel.findOneAndUpdate({ name }, update, { new: true });

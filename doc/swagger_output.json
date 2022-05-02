@@ -160,8 +160,8 @@
         "tags": [
           "Library"
         ],
-        "summary": "Get a book by category e author ",
-        "description": "Get a book by category e author (If you pass no parameter it returns the first element from your database)",
+        "summary": "Get a book by category and author ",
+        "description": "Get a book by category and author",
         "parameters": [
           {
             "name": "category",
@@ -172,6 +172,43 @@
           {
             "name": "author",
             "description": "Author name",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/library/category/{category}": {
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "summary": "Get a book by category and paginate",
+        "description": "Get a book by category and paginate",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Book category"
+          },
+          {
+            "name": "page",
+            "description": "Page number",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "books",
+            "description": "Number of books per page",
+            "required": true,
             "in": "query",
             "type": "string"
           }

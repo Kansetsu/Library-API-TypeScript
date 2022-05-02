@@ -8,7 +8,7 @@
     },
     "scripts": {
         "build": "tsc -p tsconfig.json",
-        "start": "tsc -p tsconfig.json && npm run swagger-autogen && node ./build/main.js",
+        "start": "tsc -p tsconfig.json && npm run swagger-autogen && node ./build/index.js",
         "swagger-autogen": "node ./src/config/swagger.js",
         "test": "jest"
     },
